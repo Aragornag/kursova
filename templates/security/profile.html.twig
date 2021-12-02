@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}<div class="container">
+    <h2>List of articles</h2>
+    <a class="" href="{{ path('create_article') }}"><button type="button" class="btn btn-info mb-4">Add Article</button></a>
+    {% for article in articles %}
+        <div class="card bg-primary text-while">
+            <div class="card-body">
+                <div>Title: {{ article.title }}</div>
+                <div>Content: <br> {{ article.content }}</div>
+                <div class="text-white bg-white"><a href="{{ path('single_article',{'article': article.id}) }}">watch</a></div>
+                <div class="text-white bg-white"><a href="{{ path('update_article',{'article': article.id}) }}">Edit</a></div>
+                <div class="text-white bg-white"><a href="{{ path('article_delete',{'article': article.id}) }}">delete</a></div>
+            </div>
+        </div>
+    {% endfor %}
+
+    </div>
+{% endblock %}
