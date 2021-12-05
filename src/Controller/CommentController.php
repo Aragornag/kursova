@@ -55,6 +55,8 @@ class CommentController extends AbstractController
      */
     public function update(Request $request, Article $article, Comment $comment)
     {
+
+
         $form = $this->createForm(CommentType::class, $comment, [
             'action' => $this->generateUrl('comment_update_form', [
                 'article' => $article->getId(),

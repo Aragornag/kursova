@@ -1,16 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profile{% endblock %}
+{% block title %}Hello ArticleController!{% endblock %}
 
-{% block body %}<div class="container">
-    {#<h1>{{ app.user.roles[0] }}</h1>#}
-    <h2>List of articles</h2>
-    <style>
-        .mr-2{
-            margin-right: 20px;
-        }
-    </style>
-    <a class="" href="{{ path('create_article') }}"><button type="button" class="btn btn-info mb-4">Add Article</button></a>
+{% block body %}
+    
+<div class="container">
     {% for article in articles %}
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col p-4 d-flex flex-column position-static">
@@ -28,23 +22,26 @@
                     <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
                 </svg>
             </div>
-            <div class="border-top bg-light btn-toolbar p-2" role="toolbar" aria-label="Toolbar with button groups">
-
-                <div class="btn-group mr-2" role="group" aria-label="First group">
-
-                    <a href="{{ path('single_article',{'article': article.id}) }}"><button type="button" class="btn btn-success">watch</button></a>
-                </div>
-                <div class="btn-group mr-2" role="group" aria-label="Second group">
-                    <a href="{{ path('update_article',{'article': article.id}) }}"><button type="button" class="btn btn-warning">Edit</button></a>
-
-                </div>
-                <div class="btn-group" role="group" aria-label="Third group">
-                    <a href="{{ path('article_delete',{'article': article.id}) }}"><button type="button" class="btn btn-danger">delete</button></a>
-
-                </div>
-            </div>
         </div>
     {% endfor %}
 
-    </div>
+    <style>
+        .lead {
+            font-size: 1.25rem;
+            font-weight: 300;
+            width: 90%;
+            word-break: break-all;
+            white-space: normal;
+        }
+        .jumbotron{
+        margin-bottom: 2rem;
+        background-color: #e9ecef;
+        border-radius: .3rem;
+        margin-top: 20px;
+        padding: 40px;
+        }
+    </style>
+
+
+</div>
 {% endblock %}

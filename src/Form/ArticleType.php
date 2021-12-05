@@ -19,10 +19,11 @@ class ArticleType extends AbstractType
         $builder
             /*->add('author', TextType::class, ['label' => 'Author'])*/
             ->add('title', TextType::class, ['label' => 'Title'])
-            ->add('content', TextareaType::class, ['label' => 'Content'])
+            ->add('content', TextareaType::class, ['label' => 'Content','attr' => array('class' => 'form-control')])
             ->add('category', EntityType::class, [
                 'label' => 'category',
                 'class' => Category::class,
+                'attr' => array('class' => 'form-control')
             ])
         ;
     }

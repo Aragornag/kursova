@@ -6,66 +6,39 @@
     
 <div class="container">
     <h2>Last Articles</h2>
-    {% for article in articles %}
-        <div class="card bg-primary text-while">
-            <div class="card-body">
-                <h2>Title: {{ article.title }}</h2>
-                <div>Author: {{ article.author.name }}</div>
-                {#<div>{{ article.content }}</div>#}
-                <div>{{ article.content|length > 50 ? article.content|slice(0, 50) ~ '...' : article.content  }}</div>
-                <div class="text-white bg-white"><a href="{{ path('single_article',{'article': article.id}) }}">watch</a></div>
-            </div>
-        </div>
-    {% endfor %}
-    <div class="row mb-2">
-        <div class="col-md-6">
+
+        {% for article in articles %}
+
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-primary">World</strong>
-                    <h3 class="mb-0">Featured post</h3>
-                    <div class="mb-1 text-muted">Nov 12</div>
-                    <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="stretched-link">Continue reading</a>
+                    <strong class="d-inline-block mb-2 text-primary">{{ article.category }}</strong>
+                    <h3 class="mb-0">{{ article.title }}</h3>
+                    <div class="mb-1 text-muted">{{ article.createdAt|date("F jS") }}</div>
+                    <p class="card-text mb-auto lead">{{ article.content|length > 260 ? article.content|slice(0, 260) ~ '...' : article.content  }}</p>
+                    <p><b>Author: {{ article.author.name }}</b></p>
+                    <a href="{{ path('single_article',{'article': article.id}) }}" class="{#stretched-link#}">Continue reading</a>
                 </div>
                 <div class="col-auto d-none d-lg-block">
-                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
+                    <svg class="bd-placeholder-img" width="200" height="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                        <title>Placeholder</title>
+                        <rect width="100%" height="100%" fill="#55595c"></rect>
+                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                    </svg>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-success">Design</strong>
-                    <h3 class="mb-0">Post title</h3>
-                    <div class="mb-1 text-muted">Nov 11</div>
-                    <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="stretched-link">Continue reading</a>
-                </div>
-                <div class="col-auto d-none d-lg-block">
-                    <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
 
-                </div>
-            </div>
-        </div>
-    </div>
-    <style>
-        .lead {
-            font-size: 1.25rem;
-            font-weight: 300;
-        }
-        .jumbotron{
-        margin-bottom: 2rem;
-        background-color: #e9ecef;
-        border-radius: .3rem;
-        margin-top: 20px;
-        }
-    </style>
-    <div class="jumbotron">
-        <h1>Navbar example</h1>
-        <p class="lead">This example is a quick exercise to illustrate how the top-aligned navbar works. As you scroll, this navbar remains in its original position and moves with the rest of the page.</p>
-        <a class="btn btn-lg btn-primary" href="../../components/navbar/" role="button">View navbar docs »</a>
-    </div>
+        {% endfor %}
+
 
 </div>
+
+
+
+    <style>
+        .lead {
+            word-break: break-all;
+            white-space: normal}
+    </style>
+
+
 {% endblock %}

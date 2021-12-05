@@ -50,4 +50,34 @@ class SecurityController extends AbstractController
         return  $this->render('security/profile.html.twig', ['articles' => $articles]);
     }
 
+    /**
+     * @Route("/admin", name="app_admin")
+     */
+    public function admin() : Response
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $users = $em->getRepository(User::class)->findAll();
+
+        return  $this->render('security/admin.html.twig', ['users' => $users]);
+    }
+
+    /**
+     * @Route("/admin/{user}", name="admin_see_profile")
+     */
+    public function admin_see_profile(User $user) : Response
+    {
+        /*$em = $this->getDoctrine()->getManager();
+
+        $users = $em->getRepository(User::class)->findAll();*/
+
+        $em = $this->getDoctrine()->getManager();
+
+        $articles = $em->getRepository(Article::class)->findBy(
+            ['author' => $user->getId()]
+        );
+
+        return  $this->render('security/profile.html.twig', ['articles' => $articles]);
+    }
+
 }

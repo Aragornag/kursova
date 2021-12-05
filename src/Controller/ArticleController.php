@@ -26,7 +26,7 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/article/single/{article}', name: 'single_article')]
-    public function single(Article $article)
+    public function single(Article $article) : Response
     {
         return $this->render('article/single.html.twig', [
             'article' => $article,
@@ -34,7 +34,7 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/article/create', name: 'create_article')]
-    public function create(Request $request)
+    public function create(Request $request) : Response
     {
         $article = new Article();
 
@@ -69,7 +69,7 @@ class ArticleController extends AbstractController
         ]);
     }
     #[Route('/article/update/{article}', name: 'update_article')]
-    public function update(Request $request, Article $article)
+    public function update(Request $request, Article $article) : Response
     {
         $form = $this->createForm(ArticleType::class, $article, [
             'action' => $this->generateUrl('update_article', [
@@ -83,7 +83,7 @@ class ArticleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid())
         {
             $article = $form ->getData();
-            $article->setUpdateAt(new \DateTime('now'));
+            $article->setUpdatedAt(new \DateTime('now'));
 
             $em = $this->getDoctrine()->getManager();
             $em->flush();
@@ -97,12 +97,15 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/article/delete/{article}', name: 'article_delete')]
-    public function delete(Article $article)
+    public function delete(Article $article) : Response
     {
         $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        if($article->getAuthor()->getId() == $user->getId())
+        $userrole = $user->getRoles();
+
+        /*if($article->getAuthor()->getId() == $user->getId())*/
+        if((($article->getAuthor()->getId() == $user->getId()) or ($userrole[0] == "ROLE_ADMIN")))
         {
             $em->remove($article);
             $em->flush();
@@ -114,7 +117,7 @@ class ArticleController extends AbstractController
     /**
      * @Route("/search", name="blog_search")
      */
-    public function search(Request $request)
+    public function search(Request $request) : Response
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -126,4 +129,23 @@ class ArticleController extends AbstractController
             'articles' => $article
         ]);
     }
+
+    /**
+     * @Route("/category/{category}", name="category")
+     * @param Integer $category
+     * @return Response
+     */
+    public function category(Int $category) : Response
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $articles = $em->getRepository(Article::class)->findBy(
+            ['category' => $category]
+        );
+
+        return $this->render('category/index.html.twig', [
+            'articles' => $articles
+        ]);
+    }
+
 }
