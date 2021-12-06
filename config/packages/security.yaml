@@ -40,5 +40,7 @@ security:
         - { path: ^/comments/delete/^, roles: ROLE_ADMIN }
         - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/article/create, roles: ROLE_USER }
+        - { path: ^/article/delete, roles: ROLE_USER }
+        - { path: ^/article/update, roles: ROLE_USER }
         # - { path: ^/profile, roles: ROLE_USER }
 
