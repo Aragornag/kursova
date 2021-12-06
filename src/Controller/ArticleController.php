@@ -115,22 +115,6 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/search", name="blog_search")
-     */
-    public function search(Request $request) : Response
-    {
-
-        $em = $this->getDoctrine()->getManager();
-        $query = $request->query->get('q');
-
-        $article = $em->getRepository(Article::class)->searchByQuery($query);
-
-        return $this->render('search/search.html.twig', [
-            'articles' => $article
-        ]);
-    }
-
-    /**
      * @Route("/category/{category}", name="category")
      * @param Integer $category
      * @return Response
