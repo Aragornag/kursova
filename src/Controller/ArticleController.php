@@ -82,11 +82,18 @@ class ArticleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $article = $form ->getData();
-            $article->setUpdatedAt(new \DateTime('now'));
+            $user = $this->getUser();
+            $userrole = $user->getRoles();
 
-            $em = $this->getDoctrine()->getManager();
-            $em->flush();
+            if((($article->getAuthor()->getId() == $user->getId()) or ($userrole[0] == "ROLE_ADMIN")))
+            {
+                $article = $form ->getData();
+                $article->setUpdatedAt(new \DateTime('now'));
+
+                $em = $this->getDoctrine()->getManager();
+                $em->flush();
+            }
+
 
             return $this->redirectToRoute('article');
         }
@@ -104,7 +111,6 @@ class ArticleController extends AbstractController
 
         $userrole = $user->getRoles();
 
-        /*if($article->getAuthor()->getId() == $user->getId())*/
         if((($article->getAuthor()->getId() == $user->getId()) or ($userrole[0] == "ROLE_ADMIN")))
         {
             $em->remove($article);
